@@ -4,6 +4,8 @@ const app = express()
 const mongoose = require("mongoose")
 
 app.use(bodyParser.urlencoded({extended: true}));
+app.set('view engine', 'ejs');
+
 
 mongoose.connect("mongodb+srv://ana-admin:Test123@cluster0.i4tx1.mongodb.net/nuggetDB?retryWrites=true&w=majority", {
     useNewUrlParser: true,
@@ -18,15 +20,16 @@ const nuggetSchema = {
 
 const Nugget = mongoose.model("Nugget", nuggetSchema)
 
-//use app.route to chain up the methods!
-
-//// in postman you have to click "www-form-encoded because that's what body-parser is set to understand!
+app.get("/", function(req, res) {
+    res.render("home")
+})
 
 app.route("/nuggets")
     .get(function (req, res) {
         Nugget.find({}, function (err, foundNuggets) {
             if (!err) {
-                res.send(foundNuggets)
+//                res.send(foundNuggets)
+                res.render("nuggets", {nuggets: foundNuggets})
             } else {
                 res.send(err)
             }
