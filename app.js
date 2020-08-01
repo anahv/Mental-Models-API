@@ -11,6 +11,14 @@ mongoose.connect("mongodb+srv://ana-admin:Test123@cluster0.i4tx1.mongodb.net/nug
     useUnifiedTopology: true
 })
 
+app.use(function (req, res, next) {
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+    res.setHeader('Access-Control-Allow-Credentials', true);
+    next();
+});
+
 const nuggetSchema = {
     title: String,
     content: String,
