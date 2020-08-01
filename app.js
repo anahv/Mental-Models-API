@@ -6,7 +6,6 @@ const mongoose = require("mongoose")
 app.use(bodyParser.urlencoded({extended: true}));
 app.set('view engine', 'ejs');
 
-
 mongoose.connect("mongodb+srv://ana-admin:Test123@cluster0.i4tx1.mongodb.net/nuggetDB?retryWrites=true&w=majority", {
     useNewUrlParser: true,
     useUnifiedTopology: true
@@ -28,8 +27,8 @@ app.route("/nuggets")
     .get(function (req, res) {
         Nugget.find({}, function (err, foundNuggets) {
             if (!err) {
-//                res.send(foundNuggets)
-                res.render("nuggets", {nuggets: foundNuggets})
+               res.send(foundNuggets)
+                // res.render("nuggets", {nuggets: foundNuggets})
             } else {
                 res.send(err)
             }
@@ -101,7 +100,7 @@ app.route("/nuggets/:id")
                     res.send("Updated nugget " + nuggetId)
                 }
             })
-    }) 
+    })
     .patch(function (req, res) {
         const nuggetId = req.params.id
         const content = req.body.content
