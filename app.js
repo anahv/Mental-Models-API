@@ -2,6 +2,11 @@ const express = require("express")
 const bodyParser = require("body-parser")
 const app = express()
 const mongoose = require("mongoose")
+var cors = require('cors');
+
+const whitelist = ["http://localhost:3000", "http://localhost:3001"]
+app.use(cors({origin: whitelist}));
+// coudl also add origin: "*"
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.set('view engine', 'ejs');
@@ -11,13 +16,14 @@ mongoose.connect("mongodb+srv://ana-admin:Test123@cluster0.i4tx1.mongodb.net/nug
     useUnifiedTopology: true
 })
 
-app.use(function (req, res, next) {
-    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
-    res.setHeader('Access-Control-Allow-Credentials', true);
-    next();
-});
+// not needed after installing cors package
+// app.use(function (req, res, next) {
+//     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+//     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+//     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+//     res.setHeader('Access-Control-Allow-Credentials', true);
+//     next();
+// });
 
 const nuggetSchema = {
     title: String,
@@ -56,7 +62,7 @@ app.route("/nuggets")
 
         newNugget.save(function (err) {
             if (!err) {
-                res.send("Added a new nugget!")
+                res.send("Added a new nugget " + newNugget._id)
             } else {
                 res.send(err)
             }
