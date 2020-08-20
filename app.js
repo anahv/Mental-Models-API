@@ -4,7 +4,7 @@ const app = express()
 const mongoose = require("mongoose")
 var cors = require('cors');
 
-const whitelist = ["http://localhost:3000", "http://localhost:3001"]
+const whitelist = ["http://localhost:3000", "http://localhost:3001", "http://nuggetapp.herokuapp.com/"]
 app.use(cors({origin: whitelist}));
 // coudl also add origin: "*"
 
