@@ -1,4 +1,4 @@
-# Mental Models api
+# Mental Models API
 
 A RESTful API that contains mental models from the book "Super Thinking: Upgrade Your Reasoning and Make Better Decisions with Mental Models" (2019) by Gabriel Weinberg and Lauren McCann.
 
