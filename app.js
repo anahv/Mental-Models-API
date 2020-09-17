@@ -1,8 +1,10 @@
+require("dotenv").config();
 const express = require("express")
 const bodyParser = require("body-parser")
 const app = express()
 const mongoose = require("mongoose")
 var cors = require('cors');
+const scheduler = require("./twilio");
 
 const whitelist = ["http://localhost:3000", "http://localhost:3001", "https://nuggetapp.herokuapp.com", "http://nuggetapp.herokuapp.com"]
 app.use(cors({origin: whitelist}));
@@ -11,12 +13,12 @@ app.use(cors({origin: whitelist}));
 app.use(bodyParser.urlencoded({extended: true}));
 app.set('view engine', 'ejs');
 
-mongoose.connect("mongodb+srv://ana-admin:Test123@cluster0.i4tx1.mongodb.net/nuggetDB?retryWrites=true&w=majority", {
+mongoose.connect(process.env.DB_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 })
 
-// not needed after installing cors package
+// not needed after installing cors package but worth keeping for future
 // app.use(function (req, res, next) {
 //     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
 //     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
@@ -146,6 +148,7 @@ app.route("/nuggets/:id")
         })
     })
 
+scheduler.start();
 
 let port = process.env.PORT;
 if (port == null || port == "") {
