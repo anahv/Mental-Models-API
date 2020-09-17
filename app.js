@@ -7,8 +7,8 @@ var cors = require('cors');
 const scheduler = require("./twilio");
 
 const whitelist = ["http://localhost:3000", "http://localhost:3001", "https://nuggetapp.herokuapp.com", "http://nuggetapp.herokuapp.com"]
-app.use(cors({origin: whitelist}));
-// coudl also add origin: "*"
+app.use(cors({origin: *}));
+// could also add origin: whitelist
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.set('view engine', 'ejs');
